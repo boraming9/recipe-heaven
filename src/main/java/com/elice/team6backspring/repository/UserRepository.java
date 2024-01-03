@@ -1,5 +1,6 @@
 package com.elice.team6backspring.repository;
 
+import com.elice.team6backspring.domain.Recipe;
 import com.elice.team6backspring.domain.User;
 import org.springframework.data.repository.CrudRepository;
 
@@ -8,4 +9,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
 
+    User findOneById(Integer id);
 }

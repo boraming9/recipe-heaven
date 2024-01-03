@@ -3,23 +3,32 @@ package com.elice.team6backspring.controller;
 import com.elice.team6backspring.domain.Recipe;
 import com.elice.team6backspring.dto.RecipeRequest;
 import com.elice.team6backspring.repository.RecipeRepository;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.Date;
+
 @Slf4j
 @Controller	// This means that this class is a Controller
 @RequestMapping(path="/recipes") // This means URL's start with /demo (after Application path)
-public class MainController {
+public class RecipeController {
 	@Autowired // This means to get the bean called userRepository
 	private RecipeRepository recipeRepository;
 
 	@GetMapping
 	public @ResponseBody Iterable<Recipe> getAllRecipes() {
 		// This returns a JSON or XML with the users
-		return recipeRepository.findAll();
+		return recipeRepository.findAllWithoutDeletedDate();
+	}
+
+	@GetMapping(path="/deletedRecipes")
+	public @ResponseBody Iterable<Recipe> getAllDeletedRecipes() {
+		// This returns a JSON or XML with the users
+		return recipeRepository.findAllDeletedRecipes();
 	}
 
 	@GetMapping(path="/{id}")
@@ -55,8 +64,14 @@ public class MainController {
 	public @ResponseBody String removeRecipe(@PathVariable("id") Integer recipeId) {
 		// This returns a JSON or XML with the users
 		Recipe recipe = recipeRepository.getReferenceById(recipeId);
-		recipeRepository.deleteById(recipeId);
+		//		recipeRepository.deleteById(recipeId);
 
-		return "No."+recipe.getRecipeId()+" "+recipe.getRecipeName()+" is removed";
+		int result = recipe.updateDeleteTime();
+
+		if(result==0)
+			recipeRepository.save(recipe);
+		else return "Already No."+recipe.getRecipeId()+" "+recipe.getRecipeName()+" was deleted";
+
+		return "No."+recipe.getRecipeId()+" "+recipe.getRecipeName()+" is updated DeletedAt field with nowDate";
 	}
 }
