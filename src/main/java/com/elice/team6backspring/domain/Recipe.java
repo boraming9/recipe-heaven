@@ -12,14 +12,16 @@ import java.util.List;
 @Entity // This tells Hibernate to make a table out of this class
 @Getter
 @Setter
-@TableGenerator(
-		name = "RECIPE_SEQ_GENERATOR",
-		table = "RECIPE_SEQUENCES",
-		pkColumnValue = "RECIPE_SEQ", allocationSize = 1
-		)
+//@TableGenerator(
+//		name = "RECIPE_SEQ_GENERATOR",
+//		table = "RECIPE_SEQ",
+//		pkColumnValue = "recipeid", allocationSize = 1
+//		)
 public class Recipe {
 	@Id
-	@GeneratedValue(strategy= GenerationType.TABLE, generator = "RECIPE_SEQ_GENERATOR")
+//	@GeneratedValue(strategy= GenerationType.TABLE, generator = "RECIPE_SEQ_GENERATOR")
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Column(name="recipeid")
 	private Integer recipeId;
 	@Column(name="recipename")
 	private String recipeName;
@@ -33,6 +35,7 @@ public class Recipe {
 	private Integer leadTime;
 	private Integer level;
 
+
 	@Type(JsonType.class)
 	@Column(name = "ingredient", columnDefinition = "longtext")
 	private List<Object> ingredient;
@@ -40,6 +43,13 @@ public class Recipe {
 	@Type(JsonType.class)
 	@Column(name = "step", columnDefinition = "longtext")
 	private List<Object> step;
+
+//	@ManyToOne
+//	@JoinColumn(name="Id")
+//	private User userId;
+
+//	@Column(name="categoryCategoryId")
+//	private Integer categoryCategoryId;
 
 	public Recipe of(RecipeRequest request){
 		this.recipeName = request.getRecipeName();
@@ -49,6 +59,8 @@ public class Recipe {
 		this.level = request.getLevel();
 		this.ingredient = request.getIngredient();
 		this.step = request.getStep();
+//		this.userId = user.getUserId();
+//		this.categoryCategoryId = request.getCategoryCategoryId();
 
 		return this;
 	}
