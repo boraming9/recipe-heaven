@@ -18,6 +18,7 @@ public class UserController {
 	@Autowired // This means to get the bean called userRepository
 	private UserRepository userRepository;
 
+	@CrossOrigin("*")
 	@GetMapping(path="/{id}")
 	public @ResponseBody ResponseEntity<User> getUser(@PathVariable("id") Integer id) {
 		// This returns a JSON or XML with the users
@@ -38,6 +39,7 @@ public class UserController {
 //		return newRecipe;
 //	}
 
+	@CrossOrigin("*")
 	@PatchMapping(path="/{id}/nickname/{nickname}")
 	public @ResponseBody ResponseEntity<String> editNickname (@PathVariable("id")  Integer id, @PathVariable("nickname")  String nickname) {
 
@@ -48,7 +50,7 @@ public class UserController {
 		userRepository.save(user);
 		return ResponseEntity.ok(oldNickname+" -> "+nickname+" 닉네임이 변경됐습니다.");
 	}
-
+	@CrossOrigin("*")
 	@DeleteMapping(path="/{id}")
 	public @ResponseBody ResponseEntity<String> removeUser(@PathVariable("id") Integer id) {
 		// This returns a JSON or XML with the users

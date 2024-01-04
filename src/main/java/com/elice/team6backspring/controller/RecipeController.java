@@ -22,19 +22,19 @@ import java.util.Date;
 public class RecipeController {
 	@Autowired // This means to get the bean called userRepository
 	private RecipeRepository recipeRepository;
-
+	@CrossOrigin("*")
 	@GetMapping
 	public @ResponseBody ResponseEntity<Iterable<Recipe>> getAllRecipes() {
 		// This returns a JSON or XML with the users
 		return ResponseEntity.ok(recipeRepository.findAllWithoutDeletedDate());
 	}
-
+	@CrossOrigin("*")
 	@GetMapping(path="/deletedRecipes")
 	public @ResponseBody ResponseEntity<Iterable<Recipe>> getAllDeletedRecipes() {
 		// This returns a JSON or XML with the users
 		return ResponseEntity.ok(recipeRepository.findAllDeletedRecipes());
 	}
-
+	@CrossOrigin("*")
 	@GetMapping(path="/{id}")
 	public @ResponseBody ResponseEntity<Recipe> getRecipe(@PathVariable("id") Integer recipeId) {
 		// This returns a JSON or XML with the users
@@ -45,7 +45,7 @@ public class RecipeController {
 		}
 		return ResponseEntity.ok(recipeRepository.findOneByRecipeId(recipeId));
 	}
-
+	@CrossOrigin("*")
 	@PostMapping
 	public @ResponseBody ResponseEntity<Recipe> addNewRecipe (@RequestBody RecipeRequest request) {
 		// @ResponseBody means the returned String is the response, not a view name
@@ -57,7 +57,7 @@ public class RecipeController {
 		log.info("###레시피 생성 : No{}.{}", newRecipe.getRecipeId(), newRecipe.getRecipeName());
 		return ResponseEntity.ok(newRecipe);
 	}
-
+	@CrossOrigin("*")
 	@PatchMapping(path="/{id}")
 	public @ResponseBody ResponseEntity<String> patchRecipe (@PathVariable("id")  Integer recipeId, @RequestBody RecipeRequest request) {
 
@@ -67,7 +67,7 @@ public class RecipeController {
 		recipeRepository.save(updateRecipe);
 		return ResponseEntity.ok("No."+recipe.getRecipeId()+" "+recipe.getRecipeName()+" is edited");
 	}
-
+	@CrossOrigin("*")
 	@DeleteMapping(path="/{id}")
 	public @ResponseBody ResponseEntity<String> removeRecipe(@PathVariable("id") Integer recipeId) {
 		// This returns a JSON or XML with the users
