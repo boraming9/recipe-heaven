@@ -6,6 +6,7 @@ import com.elice.team6backspring.dto.RecipeRequest;
 import com.elice.team6backspring.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,10 +18,10 @@ public class UserController {
 	private UserRepository userRepository;
 
 	@GetMapping(path="/{id}")
-	public @ResponseBody User getUser(@PathVariable("id") Integer id) {
+	public @ResponseBody ResponseEntity<User> getUser(@PathVariable("id") Integer id) {
 		// This returns a JSON or XML with the users
 //		log.info("##User 단건조회 : {}", userRepository.findOneById(id));
-		return userRepository.findOneById(id);
+		return ResponseEntity.ok(userRepository.findOneById(id));
 	}
 
 	//전달받은 인가코드를 필드에 upsert 하기, PK가 안정해졌으니 로직고민
@@ -37,22 +38,22 @@ public class UserController {
 //	}
 
 	@PatchMapping(path="/{id}/nickname/{nickname}")
-	public @ResponseBody String editNickname (@PathVariable("id")  Integer id, @PathVariable("nickname")  String nickname) {
+	public @ResponseBody ResponseEntity<String> editNickname (@PathVariable("id")  Integer id, @PathVariable("nickname")  String nickname) {
 
 		User user = userRepository.findOneById(id);
 		String oldNickname = user.getNickname();
 		user.setNickname(nickname);
 
 		userRepository.save(user);
-		return oldNickname+" 에서"+nickname+" 으로 닉네임이 변경됐습니다.";
+		return ResponseEntity.ok(oldNickname+" -> "+nickname+" 닉네임이 변경됐습니다.");
 	}
 
 	@DeleteMapping(path="/{id}")
-	public @ResponseBody String removeRecipe(@PathVariable("id") Integer id) {
+	public @ResponseBody ResponseEntity<String> removeUser(@PathVariable("id") Integer id) {
 		// This returns a JSON or XML with the users
 		User user = userRepository.findOneById(id);
 		userRepository.deleteById(id);
 
-		return "User"+user.getId()+" is removed";
+		return ResponseEntity.ok("User"+user.getId()+" is removed");
 	}
 }

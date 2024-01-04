@@ -16,6 +16,7 @@ public class User {
 	private String profilePicture;
 	private String nickname;
 //	private UserRoleEnum role;
+	private Integer role;
 
 	private String email;
 
