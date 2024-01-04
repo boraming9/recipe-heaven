@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Date;
 
+@CrossOrigin("*")
 @Slf4j
 @Controller	// This means that this class is a Controller
 @RequestMapping(path="/recipes") // This means URL's start with /demo (after Application path)

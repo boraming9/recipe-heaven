@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin("*")
 @Slf4j
 @Controller	// This means that this class is a Controller
 @RequestMapping(path="/auth") // This means URL's start with /demo (after Application path)
