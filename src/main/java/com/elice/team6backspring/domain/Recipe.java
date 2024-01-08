@@ -5,8 +5,7 @@ import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -46,6 +45,11 @@ public class Recipe {
 	@Column(name = "step", columnDefinition = "longtext")
 	private List<Object> step;
 
+
+	@Column(name = "createdat")
+	private LocalDateTime createdAt;
+
+
 	@UpdateTimestamp
 	@Column(name = "updatedat")
 	private LocalDateTime updatedAt;
@@ -54,11 +58,19 @@ public class Recipe {
 	private LocalDateTime deletedAt;
 
 //	@ManyToOne
-//	@JoinColumn(name="Id")
-//	private User userId;
+////	@JoinColumn(name="id", referencedColumnName = "id")
+//	@JoinColumnsOrFormulas(value = {
+//			@JoinColumnOrFormula(column =
+//			@JoinColumn(name = "id",
+//					referencedColumnName = "id"))
+//	})
+//	private User user;
 
-//	@Column(name="categoryCategoryId")
-//	private Integer categoryCategoryId;
+	@Column(name="userid")
+	private Integer userId;
+
+	@Column(name="categorycategoryid")
+	private Integer categoryId;
 
 // Custom method to conditionally update lastUpdateTime
 public int updateDeleteTime() {

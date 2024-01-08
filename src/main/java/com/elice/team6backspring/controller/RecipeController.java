@@ -2,6 +2,7 @@ package com.elice.team6backspring.controller;
 
 import com.elice.team6backspring.domain.Recipe;
 import com.elice.team6backspring.dto.RecipeRequest;
+import com.elice.team6backspring.dto.RecipeResponse;
 import com.elice.team6backspring.repository.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @CrossOrigin("*")
 @Slf4j
@@ -24,9 +27,13 @@ public class RecipeController {
 	private RecipeRepository recipeRepository;
 	@CrossOrigin("*")
 	@GetMapping
-	public @ResponseBody ResponseEntity<Iterable<Recipe>> getAllRecipes() {
+	public @ResponseBody ResponseEntity<Iterable<RecipeResponse>> getAllRecipes() {
 		// This returns a JSON or XML with the users
-		return ResponseEntity.ok(recipeRepository.findAllWithoutDeletedDate());
+		List<RecipeResponse> responses = new ArrayList<>();
+		recipeRepository.findAllWithoutDeletedDate().forEach(r->{
+			responses.add(RecipeResponse.of(r));
+		});
+		return ResponseEntity.ok(responses);
 	}
 	@CrossOrigin("*")
 	@GetMapping(path="/deletedRecipes")

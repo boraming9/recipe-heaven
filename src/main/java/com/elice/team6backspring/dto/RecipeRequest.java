@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 public class RecipeRequest {
 
-    private String recipeId;
+//    private String recipeId;
     private String recipeName;
     private String img;
     private Integer portion;
