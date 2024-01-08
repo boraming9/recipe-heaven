@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 public class RecipeResponse {
 
-    private String recipeId;
+    private Integer recipeId;
     private String recipeName;
     private String img;
     private Integer portion;
@@ -33,6 +33,7 @@ public class RecipeResponse {
     public static RecipeResponse of(Recipe recipe){
 
         RecipeResponse response = new RecipeResponse();
+        response.recipeId = recipe.getRecipeId();
         response.recipeName = recipe.getRecipeName();
         response.img = recipe.getRecipeImgUrl();
         response.portion = recipe.getPortion();
