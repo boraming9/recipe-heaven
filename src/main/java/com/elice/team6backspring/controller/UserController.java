@@ -43,12 +43,18 @@ public class UserController {
 	@PatchMapping(path="/{id}/nickname/{nickname}")
 	public @ResponseBody ResponseEntity<String> editNickname (@PathVariable("id")  Integer id, @PathVariable("nickname")  String nickname) {
 
-		User user = userRepository.findOneById(id);
+//		User user = userRepository.findOneById(id);
+		User user = userRepository.findOneByNickname(nickname);
+		if(user!=null){
+			return ResponseEntity.badRequest().body(nickname+"은/는 이미 존재하는 닉네임 입니다.");
+		}
+		user = userRepository.findOneById(id);
 		String oldNickname = user.getNickname();
 		user.setNickname(nickname);
 
 		userRepository.save(user);
-		return ResponseEntity.ok(oldNickname+" -> "+nickname+" 닉네임이 변경됐습니다.");
+
+		return ResponseEntity.ok(nickname);
 	}
 	@CrossOrigin("*")
 	@DeleteMapping(path="/{id}")

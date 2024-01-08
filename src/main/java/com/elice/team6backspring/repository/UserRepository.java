@@ -10,4 +10,6 @@ import org.springframework.data.repository.CrudRepository;
 public interface UserRepository extends CrudRepository<User, Integer> {
 
     User findOneById(Integer id);
+
+    User findOneByNickname(String nickname);
 }
