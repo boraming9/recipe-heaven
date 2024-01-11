@@ -37,8 +37,8 @@ public class RecipeRequest {
         recipe.setLevel(this.getLevel());
         recipe.setIngredient(this.getIngredient());
         recipe.setStep(this.getStep());
-//        recipe.setUserId(this.getUserId());
-//        recipe.setCategoryCategoryId(this.getCategoryCategoryId());
+        recipe.setUserId(this.getUserId());
+        recipe.setCategoryId(this.getCategoryCategoryId());
         return recipe;
     }
 }

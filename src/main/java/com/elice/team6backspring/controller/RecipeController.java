@@ -60,8 +60,9 @@ public class RecipeController {
 
 		Recipe recipe = request.convertRecipe();
 //		recipe.setRecipeId(recipeRepository.getNextValMySequence().intValue());
+		log.info("###레시피 input : No{}.{} ({})", recipe.getRecipeId(), recipe.getRecipeName(), recipe.getCreatedAt());
 		Recipe newRecipe = recipeRepository.save(recipe);
-		log.info("###레시피 생성 : No{}.{}", newRecipe.getRecipeId(), newRecipe.getRecipeName());
+		log.info("###레시피 생성2 : No{}.{}", newRecipe.getRecipeId(), newRecipe.getRecipeName());
 		return ResponseEntity.ok(newRecipe);
 	}
 	@CrossOrigin("*")
