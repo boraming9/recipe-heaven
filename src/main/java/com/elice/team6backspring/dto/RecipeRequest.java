@@ -4,6 +4,7 @@ import com.elice.team6backspring.domain.Recipe;
 import jakarta.persistence.Column;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -28,6 +29,7 @@ public class RecipeRequest {
     public Recipe convertRecipe(){
 
         Recipe recipe = new Recipe();
+        recipe.setCreatedAt(LocalDateTime.now());
         recipe.setRecipeName(this.getRecipeName());
         recipe.setRecipeImgUrl(this.getImg());
         recipe.setPortion(this.getPortion());
